@@ -1,6 +1,9 @@
-package net.saltfactory.demo.springboot;
+package net.saltfactory.demo.springboot.controllers;
 
 
+import net.saltfactory.demo.springboot.models.User;
+import net.saltfactory.demo.springboot.models.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,8 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class GreetingController {
+    @Autowired
+    UserMapper userMapper;
+
     @RequestMapping("/hello/{name}")
     String hello(@PathVariable String name) {
-        return "Hello, " + name + "!";
+        User user = userMapper.findUser(name);
+        return "Hello, " + user.getName() + "!";
     }
 }
